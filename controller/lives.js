@@ -130,7 +130,7 @@ const Lives = {
       });
     }
   },
-
+  
   getAllGift: async (req, res) => {
     try {
       const { roomId, cookies } = req.params;
