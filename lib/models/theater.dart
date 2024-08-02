@@ -37,4 +37,9 @@ class TheaterSchedule {
       startAt: json['start_at'],
     );
   }
+
+  String get localImagePath {
+    String showName = title.split(' - ')[0].toLowerCase().replaceAll(' ', '_');
+    return 'assets/images/$showName.png';
+  }
 }

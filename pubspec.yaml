@@ -7,10 +7,12 @@ environment:
   sdk: '>=3.2.5 <4.0.0'
 
 dependencies:
+  carousel_slider: ^4.2.1
   flutter:
     sdk: flutter
   http: ^1.2.0
   provider: ^6.1.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +21,31 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/ingin_bertemu.png
+    - assets/images/cara_meminum_ramune.png
+    - assets/images/aturan_anti_cinta.png
+    - assets/images/pajama_drive.png
+    - assets/images/icon/JKT48 Logo White.png
+    - assets/images/event.png
+    - assets/images/event2.png
+    - assets/images/event3.png
+    - assets/images/event4.png
+    - assets/images/event5.png
+    - assets/images/maps.png
+    - assets/images/theater.jpeg
+    - assets/images/setlists/pajama_drive.png
+    - assets/images/setlists/dewi_theater.png
+    - assets/images/setlists/matahari_milikku.png
+    - assets/images/setlists/sambil_menggandeng_erat_tanganku.png
+    - assets/images/setlists/gadis_gadis_remaja.png
+    - assets/images/setlists/aturan_anti_cinta.png
+    - assets/images/setlists/demi_seseorang.png
+    - assets/images/setlists/cara_meminum_ramune.png
+    - assets/images/setlists/bel_terakhir_berbunyi.png
+    - assets/images/setlists/tunas_di_balik_seragam.png
+    - assets/images/setlists/saka_agari.png
+    - assets/images/setlists/sekarang_sedang_jatuh_cinta.png
+    - assets/images/setlists/fajar_sang_idola.png
+    - assets/images/setlists/ingin_bertemu.png

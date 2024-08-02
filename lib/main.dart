@@ -1,66 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:jkt48show_mobile/pages/home.dart';
+import 'package:jkt48show_mobile/pages/room-onlives.dart';
+import 'package:jkt48show_mobile/pages/setlist-list.dart';
+import 'package:jkt48show_mobile/pages/theater-schedule.dart';
+import 'package:jkt48show_mobile/pages/room-list.dart';
 import 'package:provider/provider.dart';
 import 'provider.dart';
-import 'models/theater.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => TheaterScheduleProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TheaterScheduleProvider()),
+        ChangeNotifierProvider(create: (_) => RoomsProvider()),
+      ],
       child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _currentIndex = 0; 
+
+  final List<Widget> _screens = [
+    HomeScreen(),
+    TheaterScheduleListScreen(),
+    SetlistScreen(),
+    RoomsListScreen(), 
+    RoomsonlivesScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index; 
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'JKT48 Theater Schedule',
-      home: TheaterScheduleListScreen(),
-    );
-  }
-}
-
-class TheaterScheduleListScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<TheaterScheduleProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('JKT48 Theater Schedule'),
+      debugShowCheckedModeBanner: false,
+      title: 'JKT48 Mobile',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Color(0xFF121212),
+        cardColor: Color(0xFF2c3e50),
+        primaryColor: Colors.blue,
+        appBarTheme: AppBarTheme(
+          color: Color.fromARGB(255, 80, 10, 10),
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: const Color.fromARGB(179, 133, 0, 0)),
+          bodyText2: TextStyle(color: Colors.white70),
+        ),
       ),
-      body: provider.loading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: provider.schedules.length,
-              itemBuilder: (context, index) {
-                TheaterSchedule schedule = provider.schedules[index];
-                return Card(
-                  child: ListTile(
-                    leading: Image.network(schedule.imageUrl),
-                    title: Text(schedule.title),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Room Name: ${schedule.roomName}'),
-                        Text('Start At: ${DateTime.fromMillisecondsSinceEpoch(schedule.startAt * 1000)}'),
-                        Text('Live: ${schedule.isOnLive ? "Yes" : "No"}'),
-                      ],
-                    ),
-                    onTap: () {
-                      // Add action on tap, such as navigating to the detailed page or opening the entrance URL
-                      // For example:
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => DetailedScreen(schedule: schedule)));
-                    },
-                  ),
-                );
-              },
+      home: Scaffold(
+        body: _screens[_currentIndex], // Display the current screen
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home', // Theater Schedule
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: provider.fetchSchedules,
-        child: Icon(Icons.refresh),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.event),
+              label: 'Schedule', // Theater Schedule
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.music_note),
+              label: 'Setlist', // Rooms
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Members', // Rooms
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.broadcast_on_home),
+              label: 'On Live', // Rooms
+            ),
+          ],
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped, // Handle tap events
+        ),
       ),
     );
   }

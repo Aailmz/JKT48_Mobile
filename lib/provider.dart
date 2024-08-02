@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'api_service.dart';
 import 'models/theater.dart';
+import 'models/room.dart';
 
 class TheaterScheduleProvider with ChangeNotifier {
   TheaterScheduleService _service = TheaterScheduleService();
@@ -20,3 +21,23 @@ class TheaterScheduleProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class RoomsProvider with ChangeNotifier {
+  RoomsService _service = RoomsService();
+  List<Room> _rooms = [];
+  bool _loading = false;
+
+  List<Room> get rooms => _rooms;
+  bool get loading => _loading;
+
+  Future<void> fetchRooms() async {
+    _loading = true;
+    notifyListeners();
+
+    _rooms = await _service.fetchRooms();
+
+    _loading = false;
+    notifyListeners();
+  }
+}
+
