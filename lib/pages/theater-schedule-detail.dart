@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:jkt48show_mobile/models/theater.dart';
+import 'package:url_launcher/url_launcher.dart'; // Add this import for URL launching
 
 class TheaterScheduleDetailScreen extends StatelessWidget {
   final TheaterSchedule schedule;
 
   TheaterScheduleDetailScreen({required this.schedule});
+
+  // Function to launch URL
+  void _launchURL() async {
+    const url = 'https://www.jkt48.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +75,17 @@ class TheaterScheduleDetailScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.grey[400], // Lighter grey for contrast
+              ),
+            ),
+            SizedBox(height: 16.0),
+            // Button to access JKT48 website
+            Center(
+              child: ElevatedButton(
+                onPressed: _launchURL,
+                child: Text('Apply Ticket at JKT48 Official Website!', style: TextStyle(color: Colors.white),),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue, // Change button color as needed
+                ),
               ),
             ),
             SizedBox(height: 16.0),

@@ -4,7 +4,7 @@ import 'models/theater.dart';
 import 'models/room.dart';
 
 class TheaterScheduleService {
-  final String apiUrl = "http://localhost:8000/api/rooms/theater-schedule";
+  final String apiUrl = "http://192.168.1.164:8000/api/rooms/theater-schedule";
 
   Future<List<TheaterSchedule>> fetchSchedules() async {
     final response = await http.get(Uri.parse(apiUrl));
@@ -20,7 +20,7 @@ class TheaterScheduleService {
 
 class RoomsService {
   final String apiUrl = 
-  "http://localhost:8000/api/rooms";
+  "http://192.168.1.164:8000/api/rooms";
 
   Future<List<Room>> fetchRooms() async {
     final response = await http.get(Uri.parse(apiUrl));
