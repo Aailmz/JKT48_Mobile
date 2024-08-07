@@ -25,6 +25,7 @@ flutter:
   assets:
     - assets/images/ingin_bertemu.png
     - assets/images/cara_meminum_ramune.png
+    - assets/images/tunas_di_balik_seragam.png
     - assets/images/aturan_anti_cinta.png
     - assets/images/pajama_drive.png
     - assets/images/icon/JKT48 Logo White.png
